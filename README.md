@@ -8,7 +8,7 @@ Discover all types of connected network equipment using CDP neighbor information
 Install package using pip
 
 ```bash
-  pip install cisco_discovery
+  pip install cisco-discovery
 ```
 ## Run Locally
 
