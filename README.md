@@ -70,7 +70,7 @@ if __name__=='__main__':
     # Generate CSV for nodes and edges at once
     obj_discovery.to_excel(directory="output", file_name= "file_name")
 
-    # Generate drwa io xml for nodes and edges
+    # Generate draw_io xml for nodes and edges
     obj_discovery.to_draw_io(directory="output", file_name= "file_name")
 ```
 
