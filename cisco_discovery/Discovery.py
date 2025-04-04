@@ -1,4 +1,6 @@
-from .File_Save import EDGES_TO_CSV, EDGES_TO_EXCEL, NODES_EDGES_TO_CSV, NODES_EDGES_TO_EXCEL, NODES_TO_CSV, NODES_TO_EXCEL
+
+from .File_Save import EDGES_TO_CSV, EDGES_TO_EXCEL, NODES_EDGES_TO_CSV, NODES_EDGES_TO_DRAW_IO, NODES_EDGES_TO_EXCEL, NODES_TO_CSV, NODES_TO_EXCEL
+
 
 class Discovery:
     def __init__(self):
@@ -102,7 +104,10 @@ class Discovery:
             obj_node_edges = NODES_EDGES_TO_EXCEL(src_content=self.node_edges, directory=directory, file_name=file_name)
             return obj_node_edges.generate()
     
+    def to_draw_io(self, directory = "output", file_name = ""):
+        if self.node_edges:
+            obj_node_edges = NODES_EDGES_TO_DRAW_IO(src_content=self.node_edges, directory=directory, file_name=file_name)
+            return obj_node_edges.generate()
+    
     def __str__(self):
         return "Class for building nodes and edges"
-
-    

@@ -34,7 +34,7 @@ class Device_Role:
                     self.os = self.version['version'].get('os', None)
                 # Stacked Switch
                 if len(switches) >= 2:
-                    self.role = "multi-Switch"
+                    self.role = "multi-switch"
                     self.os = self.version['version'].get('os', None)
         
         # Cisco Nexus

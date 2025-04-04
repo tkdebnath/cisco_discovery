@@ -2,6 +2,8 @@ import pandas as pd
 import os
 from datetime import datetime
 
+from .Draw_io import draw_io_xml_generate
+
 class SaveFile:
     def __init__(self, file_format, src_type, src_content: dict, directory: str="output", file_name: str=""):
         self.file_format = file_format
@@ -45,8 +47,20 @@ class SaveFile:
             self.process_nodes(nodes_content)
             self.process_edges(edges_content)
             self.save_file("nodes")
-            self.save_file("edges")        
+            self.save_file("edges")
         
+        if self.src_type == "draw_io":
+            nodes_content = self.src_content.get('nodes', None)
+            edges_content = self.src_content.get('edges', None)
+            
+            if not nodes_content or not edges_content:
+                raise BaseException("nodes_content or edges_content is not dict")
+            
+            self.process_nodes(nodes_content)
+            self.process_edges(edges_content)
+            self.save_file("draw_io")
+            
+            
     def process_nodes(self, src_content):
         nodes = src_content
         # Clear data
@@ -117,7 +131,15 @@ class SaveFile:
                 file_full_path = f"{self.directory}/edges_{self.file_name}.xlsx"
                 df.to_excel(file_full_path, index=False)
                 return f"save to {file_full_path}"
-
+        
+        if self.file_format == 'draw_io':
+            
+            if src_type == "draw_io":
+                file_full_path = f"{self.directory}/{self.file_name}.drawio"
+                draw_io_save = draw_io_xml_generate(self.nodes_record_list, self.edges_record_list, file_full_path)
+                if draw_io_save:
+                    return (f"\nSuccessfully saved diagram to {file_full_path}")
+            
 class NODES_TO_CSV(SaveFile):
     def __init__(self, src_content, directory = "output", file_name = ""):
         super().__init__("csv", "nodes", src_content, directory, file_name)
@@ -142,3 +164,7 @@ class NODES_EDGES_TO_CSV(SaveFile):
 class NODES_EDGES_TO_EXCEL(SaveFile):
     def __init__(self, src_content, directory = "output", file_name = ""):
         super().__init__("excel", "nodes-edges", src_content, directory, file_name)
+        
+class NODES_EDGES_TO_DRAW_IO(SaveFile):
+    def __init__(self, src_content, directory = "output", file_name = ""):
+        super().__init__("draw_io", "draw_io", src_content, directory, file_name)
