@@ -4,7 +4,7 @@ with open("README.md", "r") as f:
     description = f.read()
 setup(
     name='cisco_discovery',
-    version='0.0.1',
+    version='1.1',
     packages=find_packages(),
     install_requires=[
         'pandas>=2.2.3',
